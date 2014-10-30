@@ -12,11 +12,6 @@
 
 using namespace std;
 
-void parseline(string& line);
-
-bool paragraph = false;
-bool entry = false;
-bool italic = false;
-bool bold = false;
+string parseline(string& line);
 
 #endif /* SRC_PARSE_MARKDOWN_H_ */
