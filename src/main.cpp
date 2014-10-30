@@ -40,10 +40,8 @@ int main(int argc, char* argv[]) {
 	cout << endl;
 
 	while (getline(md_file->getFile(), line)) {
-		parseline(line);
+		cout << parseline(line) << endl;
 	}
-
-	cout << "</p>";
 
 	cout << endl;
 
