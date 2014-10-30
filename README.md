@@ -1,4 +1,4 @@
 Markdown_cpp
 ===========
 
-Markdown parser &amp; compiler - c++ language
+Markdown parser & compiler - c++ language
