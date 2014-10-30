@@ -13,7 +13,6 @@ using namespace std;
 
 Md_file::Md_file(string file_name){
 	this->file_name = file_name;
-	cout << "Md_file constructor" << endl;
 }
 
 Md_file::~Md_file(){
