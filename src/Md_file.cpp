@@ -25,9 +25,7 @@ ifstream& Md_file::getFile(void) {
 
 bool Md_file::openFile(void){
 	(this->file).open(this->file_name, ios::in);
-	if ((this->file).is_open())
-		return true;
-	return false;
+	return ((this->file).is_open());
 }
 
 void Md_file::closeFile(){
