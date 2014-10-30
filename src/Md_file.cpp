@@ -20,6 +20,10 @@ Md_file::~Md_file(){
 	cout << "Md_file destructor" << endl;
 }
 
+ifstream& Md_file::getFile(void) {
+	return file;
+}
+
 bool Md_file::openFile(void){
 	(this->file).open(this->file_name, ios::in);
 	if ((this->file).is_open())
