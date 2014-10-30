@@ -22,9 +22,12 @@ regex bold_regex("\\*\\*(.*)\\*\\*");
 regex url_regex("\\[(.*)\\]\\((.*)\\)");
 regex list_regex("\\*\t(.*)");
 
-/**
- * Replacement strings
+/*
+ * H1, H2 and H3 style headers regexs
  */
+regex h1_regex("# (.*)");
+regex h2_regex("## (.*)");
+regex h3_regex("### (.*)");
 
 /**
  * Bool
@@ -34,7 +37,19 @@ bool entry = false;
 bool italic = false;
 bool bold = false;
 
-void str_replace( string &s, string &search, string &replace );
+void str_replace( string &s, string &search, string &replace ) {
+	for( size_t pos = 0; ; pos += replace.length() )
+	{
+		pos = s.find( search, pos );
+		if( pos == string::npos )
+			break;
+
+		s.erase( pos, search.length() );
+		s.insert( pos, replace );
+	}
+}
+
+bool search_headers_style(string& stringToReturn, smatch& match);
 
 string parseline(string& line) {
 
@@ -47,7 +62,7 @@ string parseline(string& line) {
 	smatch match;
 
 	while (regex_search(stringToReturn, match, bold_regex) || regex_search(stringToReturn, match, italic_regex)
-			|| regex_search(stringToReturn, match, url_regex)) {
+			|| regex_search(stringToReturn, match, url_regex) || search_headers_style(stringToReturn, match)) {
 		if (regex_search(stringToReturn, match, bold_regex)) {
 			toReplace += "<b>";
 			toReplace += match[1];
@@ -84,20 +99,47 @@ string parseline(string& line) {
 			search += ")";
 			str_replace(stringToReturn, search, toReplace);
 		}
+		toReplace = "";
+		search = "";
+		if (search_headers_style(stringToReturn, match)) {
+			if (regex_search(stringToReturn, match, h3_regex)) {
+				toReplace += "<h3>";
+				toReplace += match[1];
+				toReplace += "</h3>";
+				search += "### ";
+				search += match[1];
+				str_replace(stringToReturn, search, toReplace);
+			}
+			if (regex_search(stringToReturn, match, h2_regex)) {
+				toReplace += "<h2>";
+				toReplace += match[1];
+				toReplace += "</h2>";
+				search += "## ";
+				search += match[1];
+				str_replace(stringToReturn, search, toReplace);
+			}
+			if (regex_search(stringToReturn, match, h1_regex)) {
+				toReplace += "<h1>";
+				toReplace += match[1];
+				toReplace += "</h1>";
+				cout << "toReplace : " << toReplace << endl;
+				search += "# ";
+				search += match[1];
+				cout << "search : " << search << endl;
+				str_replace(stringToReturn, search, toReplace);
+			}
+		}
 	}
 
 	return stringToReturn;
 
 }
 
-void str_replace( string &s, string &search, string &replace ) {
-	for( size_t pos = 0; ; pos += replace.length() )
-	{
-		pos = s.find( search, pos );
-		if( pos == string::npos )
-			break;
+bool search_headers_style(string& stringToReturn, smatch& match) {
 
-		s.erase( pos, search.length() );
-		s.insert( pos, replace );
-	}
+	if (regex_search(stringToReturn, match, h1_regex) || regex_search(stringToReturn, match, h2_regex)
+			|| regex_search(stringToReturn, match, h3_regex))
+		return true;
+	return false;
+
 }
