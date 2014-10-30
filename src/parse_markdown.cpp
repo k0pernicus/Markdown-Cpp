@@ -61,6 +61,12 @@ string parseline(string& line) {
 
 	smatch match;
 
+	if (stringToReturn.empty()) {
+		stringToReturn += "</p>";
+		stringToReturn += "<p>";
+
+	}
+
 	while (regex_search(stringToReturn, match, bold_regex) || regex_search(stringToReturn, match, italic_regex)
 			|| regex_search(stringToReturn, match, url_regex) || search_headers_style(stringToReturn, match)) {
 		if (regex_search(stringToReturn, match, bold_regex)) {
