@@ -20,6 +20,7 @@ using namespace std;
 regex italic_regex("[<>a-zA-Z0-9 ]*\\*([a-zA-Z0-9 ]*)\\*[<>a-zA-Z0-9 ]*");
 regex bold_regex("\\*\\*(.*)\\*\\*");
 regex url_regex("\\[(.*)\\]\\((.*)\\)");
+regex img_regex("!\\[(.*)\\]\\((.*)\\)");
 regex list_regex("\\*\t(.*)");
 
 /*
@@ -68,7 +69,8 @@ string parseline(string& line) {
 	}
 
 	while (regex_search(stringToReturn, match, bold_regex) || regex_search(stringToReturn, match, italic_regex)
-			|| regex_search(stringToReturn, match, url_regex) || search_headers_style(stringToReturn, match)) {
+			|| regex_search(stringToReturn, match, url_regex) || search_headers_style(stringToReturn, match)
+			|| regex_search(stringToReturn, match, img_regex)) {
 		if (regex_search(stringToReturn, match, bold_regex)) {
 			toReplace += "<b>";
 			toReplace += match[1];
@@ -87,6 +89,23 @@ string parseline(string& line) {
 			search += "*";
 			search += match[1];
 			search += "*";
+			str_replace(stringToReturn, search, toReplace);
+		}
+		toReplace = "";
+		search = "";
+		if (regex_search(stringToReturn, match, img_regex)) {
+			toReplace +="<img src=\"";
+			toReplace += match[2];
+			toReplace += "\"";
+			toReplace += " alt=\"";
+			toReplace += match[1];
+			toReplace += "\">";
+			search += "![";
+			search += match[1];
+			search += "]";
+			search += "(";
+			search += match[2];
+			search += ")";
 			str_replace(stringToReturn, search, toReplace);
 		}
 		toReplace = "";
