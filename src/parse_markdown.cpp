@@ -33,8 +33,18 @@ bool entry = false;
 bool italic = false;
 bool bold = false;
 
-void parseline(string& line) {
+string parseline(string& line) {
 
+	string stringToReturn;
 
+	smatch match;
+
+	if (regex_search(line, match, bold_regex)) {
+		stringToReturn += "<b>";
+		stringToReturn += match[1];
+		stringToReturn += "</b>";
+	}
+
+	return stringToReturn;
 
 }
