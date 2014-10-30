@@ -22,9 +22,9 @@ private:
 public:
 	Md_file(string file_name);
 	~Md_file(void);
+	ifstream& getFile(void);
 	bool openFile(void);
 	void closeFile(void);
-
 };
 
 #endif /* SRC_MD_FILE_H_ */
