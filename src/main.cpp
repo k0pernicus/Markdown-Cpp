@@ -33,11 +33,13 @@ int main(int argc, char* argv[]) {
 
 	Md_file* md_file = new Md_file(file_name);
 
-	ofstream outfile (changeExtensionFile(file_name));
+	ofstream outfile;
+
+	outfile.open(changeExtensionFile(file_name).c_str(), ios::out);
 
 	if (!md_file->openFile()) {
 		cout << "File not found..." << endl;
-		exit(EXIT_FAILURE);
+		return 1;
 	}
 
 	cout << "File opened" << endl;
