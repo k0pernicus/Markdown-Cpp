@@ -6,6 +6,7 @@
  */
 #include <fstream>
 #include <iostream>
+#include <string>
 
 #include "Md_file.h"
 
@@ -24,7 +25,8 @@ ifstream& Md_file::getFile(void) {
 }
 
 bool Md_file::openFile(void){
-	(this->file).open(this->file_name, ios::in);
+	const char* c_file_name = (this->file_name).c_str();
+	(this->file).open(c_file_name, ios::in);
 	return ((this->file).is_open());
 }
 
