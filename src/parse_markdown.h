@@ -14,4 +14,8 @@ using namespace std;
 
 string parseline(string& line);
 
+void str_replace( string &s, string &search, string &replace );
+
+bool search_headers_style(string& stringToReturn, smatch& match);
+
 #endif /* SRC_PARSE_MARKDOWN_H_ */

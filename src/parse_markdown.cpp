@@ -56,6 +56,10 @@ void str_replace( string &s, string &search, string &replace ) {
 
 bool search_headers_style(string& stringToReturn, smatch& match);
 
+void verify_bold() {
+
+}
+
 string parseline(string& line) {
 
 	string stringToReturn = line;
