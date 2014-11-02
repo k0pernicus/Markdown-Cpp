@@ -62,16 +62,50 @@ string parseline(string& line) {
 
 	smatch match;
 
-	if (stringToReturn.empty()) {
-		stringToReturn += "</p>";
-		stringToReturn += "<p>";
+	if (stringToReturn.empty() && current_list) {
+		current_list = false;
+		stringToReturn += "</ul>";
+	}
 
+	if ((stringToReturn.empty() == false) && !(regex_search(stringToReturn, match, bold_regex) || regex_search(stringToReturn, match, italic_regex)
+			|| regex_search(stringToReturn, match, url_regex) || search_headers_style(stringToReturn, match)
+			|| regex_search(stringToReturn, match, img_regex)
+			|| regex_search(stringToReturn, match, list_regex))) {
+		if (current_list) {
+			current_list = false;
+			toReplace += "</ul>";
+			toReplace += stringToReturn;
+			stringToReturn = toReplace;
+		}
+		if (need_paragraph) {
+			toReplace += "<p>";
+			toReplace += stringToReturn;
+			stringToReturn = toReplace;
+			need_paragraph = false;
+			current_paragraph = true;
+		}
+	}
+
+	if (stringToReturn.empty() && current_paragraph) {
+		stringToReturn += "</p>";
+		need_paragraph = true;
+		current_paragraph = false;
 	}
 
 	while (regex_search(stringToReturn, match, bold_regex) || regex_search(stringToReturn, match, italic_regex)
 			|| regex_search(stringToReturn, match, url_regex) || search_headers_style(stringToReturn, match)
-			|| regex_search(stringToReturn, match, img_regex)) {
+			|| regex_search(stringToReturn, match, img_regex)
+			|| regex_search(stringToReturn, match, list_regex)) {
 		if (regex_search(stringToReturn, match, bold_regex)) {
+			if (current_list) {
+				current_list = false;
+				stringToReturn += "</ul>";
+			}
+			if (need_paragraph) {
+				toReplace += "<p>";
+				need_paragraph = false;
+				current_paragraph = true;
+			}
 			toReplace += "<b>";
 			toReplace += match[1];
 			toReplace += "</b>";
@@ -83,6 +117,15 @@ string parseline(string& line) {
 		toReplace = "";
 		search = "";
 		if (regex_search(stringToReturn, match, italic_regex)) {
+			if (current_list) {
+				current_list = false;
+				toReplace += "</ul>";
+			}
+			if (need_paragraph) {
+				toReplace += "<p>";
+				need_paragraph = false;
+				current_paragraph = true;
+			}
 			toReplace += "<i>";
 			toReplace += match[1];
 			toReplace += "</i>";
@@ -93,7 +136,25 @@ string parseline(string& line) {
 		}
 		toReplace = "";
 		search = "";
+		if (regex_search(stringToReturn, match, list_regex)) {
+			if (!current_list) {
+				current_list = true;
+				toReplace += "<ul>";
+			}
+				toReplace += "<li>";
+				toReplace += match[1];
+				toReplace += "</li>";
+				search += "*	";
+				search += match[1];
+				str_replace(stringToReturn, search, toReplace);
+		}
+		toReplace = "";
+		search = "";
 		if (regex_search(stringToReturn, match, img_regex)) {
+			if (current_list) {
+				current_list = false;
+				stringToReturn += "</ul>";
+			}
 			toReplace +="<img src=\"";
 			toReplace += match[2];
 			toReplace += "\"";
@@ -111,6 +172,15 @@ string parseline(string& line) {
 		toReplace = "";
 		search = "";
 		if (regex_search(stringToReturn, match, url_regex)) {
+			if (current_list) {
+				current_list = false;
+				stringToReturn += "</ul>";
+			}
+			if (need_paragraph) {
+				toReplace += "<p>";
+				need_paragraph = false;
+				current_paragraph = true;
+			}
 			toReplace +="<a href=\"";
 			toReplace += match[2];
 			toReplace += "\">";
@@ -127,6 +197,10 @@ string parseline(string& line) {
 		toReplace = "";
 		search = "";
 		if (search_headers_style(stringToReturn, match)) {
+			if (current_list) {
+				current_list = false;
+				stringToReturn += "</ul>";
+			}
 			if (regex_search(stringToReturn, match, h3_regex)) {
 				toReplace += "<h3>";
 				toReplace += match[1];
