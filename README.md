@@ -14,17 +14,17 @@ Markdown converter (HTML for now) - c++ language
 
 ##Done
 
-* List
-* Headers
 * Bold
+* Headers
 * Italic
-* URL
+* Non-ordinate list
 * Pictures
+* URL
 
 ##Todo
 
-* ordinate list
-* titles
+* Ordinate list
+* Titles
 
 ##Contact
 
