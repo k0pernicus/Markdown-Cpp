@@ -23,7 +23,7 @@ bool current_list = false;
 
 string changeExtensionFile(string& file_name);
 
-int main(int argc, char* argv[]) {
+int main() {
 
 	string file_name;
 
