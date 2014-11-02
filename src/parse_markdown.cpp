@@ -30,17 +30,16 @@ regex img_regex("!\\[(.*)\\]\\((.*)\\)");
 /*
  * H1, H2 and H3 style headers regexs
  */
+//# some text
 regex h1_regex("# (.*)");
+//## some text
 regex h2_regex("## (.*)");
+//### some text
 regex h3_regex("### (.*)");
 
-/**
- * Bool
- */
-bool paragraph = false;
-bool entry = false;
-bool italic = false;
-bool bold = false;
+extern bool need_paragraph;
+extern bool current_paragraph;
+extern bool current_list;
 
 void str_replace( string &s, string &search, string &replace ) {
 	for( size_t pos = 0; ; pos += replace.length() )
