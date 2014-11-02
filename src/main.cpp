@@ -14,6 +14,13 @@
 
 using namespace std;
 
+/**
+ * Bool
+ */
+bool need_paragraph = true;
+bool current_paragraph = false;
+bool current_list = false;
+
 string changeExtensionFile(string& file_name);
 
 int main(int argc, char* argv[]) {
