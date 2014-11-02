@@ -1,6 +1,6 @@
 #Markdown_cpp
 
-Markdown parser & compiler - c++ language
+Markdown converter (HTML for now) - c++ language
 
 ##Compilation
 
