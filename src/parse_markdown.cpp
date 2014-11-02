@@ -17,10 +17,11 @@ using namespace std;
 /**
  * Regex
  */
+//*some tex*
 regex italic_regex("[<>a-zA-Z0-9 ]*\\*([a-zA-Z0-9 ]*)\\*[<>a-zA-Z0-9 ]*");
+//**some text**
 regex bold_regex("\\*\\*(.*)\\*\\*");
-regex url_regex("\\[(.*)\\]\\((.*)\\)");
-regex img_regex("!\\[(.*)\\]\\((.*)\\)");
+//*		Some text
 regex list_regex("\\*\t(.*)");
 //[some text](URL)
 regex url_regex("[^!]*\\[(.*)\\]\\((.*)\\)");
@@ -224,10 +225,8 @@ string parseline(string& line) {
 				toReplace += "<h1>";
 				toReplace += match[1];
 				toReplace += "</h1>";
-				cout << "toReplace : " << toReplace << endl;
 				search += "# ";
 				search += match[1];
-				cout << "search : " << search << endl;
 				str_replace(stringToReturn, search, toReplace);
 			}
 		}
