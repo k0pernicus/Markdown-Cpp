@@ -12,6 +12,20 @@ Markdown converter (HTML for now) - c++ language
 *	Enter the file
 *	See the output file, in the current directory
 
+##Done
+
+* Bold
+* Headers
+* Italic
+* Non-ordinate list
+* Pictures
+* URL
+
+##Todo
+
+* Ordinate list
+* Titles
+
 ##Contact
 
 antonin.carette[at]gmail.com
