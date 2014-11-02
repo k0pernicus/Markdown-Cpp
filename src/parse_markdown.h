@@ -9,6 +9,7 @@
 #define SRC_PARSE_MARKDOWN_H_
 
 #include <string>
+#include <regex>
 
 using namespace std;
 
