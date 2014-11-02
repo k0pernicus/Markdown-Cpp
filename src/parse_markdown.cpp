@@ -22,6 +22,10 @@ regex bold_regex("\\*\\*(.*)\\*\\*");
 regex url_regex("\\[(.*)\\]\\((.*)\\)");
 regex img_regex("!\\[(.*)\\]\\((.*)\\)");
 regex list_regex("\\*\t(.*)");
+//[some text](URL)
+regex url_regex("[^!]*\\[(.*)\\]\\((.*)\\)");
+//![some text](URL)
+regex img_regex("!\\[(.*)\\]\\((.*)\\)");
 
 /*
  * H1, H2 and H3 style headers regexs
