@@ -70,12 +70,7 @@ void convertToHTML::str_replace( string &s, string &search, string &replace ) {
 	}
 }
 
-bool convertToHTML::search_headers_style(string& stringToReturn, smatch& match);
-
-void convertToHTML::verification_bold(string& actualString, const string& PreviousString) {
-
-	//**some text**
-	regex bold_regex("\\*\\*(.*)\\*\\*");
+void convertToHTML::verification_bold(string& actualString) {
 
 	smatch match;
 
