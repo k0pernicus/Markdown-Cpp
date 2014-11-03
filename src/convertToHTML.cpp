@@ -18,9 +18,13 @@ using namespace std;
  * Regex
  */
 //*some tex*
-regex italic_regex("[<>a-zA-Z0-9 ]*\\*([a-zA-Z0-9 ]*)\\*[<>a-zA-Z0-9 ]*");
+regex italic_regex(".*\\*(.*)\\*.*");
+//**some text**
+regex bold_regex(".*\\*\\*(.*)\\*\\*.*");
 //*		Some text
 regex list_regex("\\*\t(.*)");
+//1.	Some text
+regex ordonate_list_regex("[[digit]]\\.\t(.*)");
 //[some text](URL)
 regex url_regex("[^!]*\\[(.*)\\]\\((.*)\\)");
 //![some text](URL)
@@ -35,6 +39,20 @@ regex h1_regex("# (.*)");
 regex h2_regex("## (.*)");
 //### some text
 regex h3_regex("### (.*)");
+//#### some text
+regex h4_regex("#### (.*)");
+//##### some text
+regex h5_regex("##### (.*)");
+//###### some text
+regex h6_regex("###### (.*)");
+
+// Some text
+// =========
+regex equals_title("[^a-zA-Z0-9]\\=+[^a-zA-Z0-9]");
+
+// Some text
+// ---------
+regex dash_title("[^a-zA-Z0-9]\\-+[^a-zA-Z0-9]");
 
 extern bool need_paragraph;
 extern bool current_paragraph;
