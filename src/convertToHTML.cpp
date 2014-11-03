@@ -10,7 +10,7 @@
 #include <string>
 #include <regex>
 
-#include "parse_markdown.h"
+#include "convertToHTML.h"
 
 using namespace std;
 
@@ -42,7 +42,7 @@ extern bool need_paragraph;
 extern bool current_paragraph;
 extern bool current_list;
 
-void str_replace( string &s, string &search, string &replace ) {
+void convertToHTML::str_replace( string &s, string &search, string &replace ) {
 	for( size_t pos = 0; ; pos += replace.length() )
 	{
 		pos = s.find( search, pos );
@@ -54,13 +54,13 @@ void str_replace( string &s, string &search, string &replace ) {
 	}
 }
 
-bool search_headers_style(string& stringToReturn, smatch& match);
+bool convertToHTML::search_headers_style(string& stringToReturn, smatch& match);
 
 void verify_bold() {
 
 }
 
-string parseline(string& line) {
+string convertToHTML::parseline(string& line) {
 
 	string stringToReturn = line;
 
@@ -240,7 +240,7 @@ string parseline(string& line) {
 
 }
 
-bool search_headers_style(string& stringToReturn, smatch& match) {
+bool convertToHTML::search_headers_style(string& stringToReturn, smatch& match) {
 
 	if (regex_search(stringToReturn, match, h1_regex) || regex_search(stringToReturn, match, h2_regex)
 			|| regex_search(stringToReturn, match, h3_regex))
