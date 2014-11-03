@@ -24,7 +24,7 @@ regex bold_regex("\\*\\*([a-zA-Z0-9ÉÈÊËÀÔÖÇéèêëàôöç* ]+)\\*\\*.*
 //*		Some text
 regex list_regex("\\*\t(.*)");
 //1.	Some text
-regex ordonate_list_regex("[[digit]]\\.\t(.*)");
+regex ordonate_list_regex("[:digit:]\\.\t(.*)");
 //[some text](URL)
 regex url_regex("[^!]*\\[(.*)\\]\\((.*)\\)");
 //![some text](URL)
