@@ -51,6 +51,8 @@ int main() {
 
 	cout << "File opened" << endl;
 
+	convertToHTML convert_to_html;
+
 	cout << endl;
 
 	while (getline(md_file->getFile(), line)) {
