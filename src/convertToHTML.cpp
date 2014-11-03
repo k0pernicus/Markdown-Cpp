@@ -39,6 +39,7 @@ regex h3_regex("### (.*)");
 extern bool need_paragraph;
 extern bool current_paragraph;
 extern bool current_list;
+extern bool debug;
 
 void convertToHTML::str_replace( string &s, string &search, string &replace ) {
 	for( size_t pos = 0; ; pos += replace.length() )
@@ -80,6 +81,11 @@ void convertToHTML::verification_bold(string& actualString, const string& Previo
 		search += match[1];
 		search += "**";
 		str_replace(actualString, search, toReplace);
+	}
+	else {
+		if (debug) {
+			cout << actualString << ": No replacement (bold)" << endl;
+		}
 	}
 
 }
