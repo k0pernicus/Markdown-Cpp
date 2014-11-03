@@ -142,7 +142,107 @@ void convertToHTML::verification_non_ordonate_list(string& actualString){
 		cout << "Replace " << actualString << " by " << toReplace << endl;
 		str_replace(actualString, search, toReplace);
 	}
+}
 
+void convertToHTML::verification_img(string& actualString) {
+
+	smatch match;
+
+	string toReplace, search;
+
+	if (regex_search(actualString, match, img_regex)) {
+		if (current_list) {
+			current_list = false;
+			actualString += "</ul>";
+		}
+		toReplace +="<img src=\"";
+		toReplace += match[2];
+		toReplace += "\"";
+		toReplace += " alt=\"";
+		toReplace += match[1];
+		toReplace += "\">";
+		search += "![";
+		search += match[1];
+		search += "]";
+		search += "(";
+		search += match[2];
+		search += ")";
+		cout << "Replace " << actualString << " by " << toReplace << endl;
+		str_replace(actualString, search, toReplace);
+	}
+}
+
+void convertToHTML::verification_url(string& actualString) {
+
+	smatch match;
+
+	string toReplace, search;
+
+	if (regex_search(actualString, match, url_regex)) {
+		if (current_list) {
+			current_list = false;
+			actualString += "</ul>";
+		}
+		if (need_paragraph) {
+			toReplace += "<p>";
+			need_paragraph = false;
+			current_paragraph = true;
+		}
+		toReplace +="<a href=\"";
+		toReplace += match[2];
+		toReplace += "\">";
+		toReplace += match[1];
+		toReplace += "</a>";
+		search += "[";
+		search += match[1];
+		search += "]";
+		search += "(";
+		search += match[2];
+		search += ")";
+		cout << "Replace " << actualString << " by " << toReplace << endl;
+		str_replace(actualString, search, toReplace);
+	}
+}
+
+void convertToHTML::verification_headers(string& actualString) {
+
+	smatch match;
+
+	string toReplace, search;
+
+	if (search_headers_style(actualString, match)) {
+		if (current_list) {
+			current_list = false;
+			actualString += "</ul>";
+		}
+		if (regex_search(actualString, match, h3_regex)) {
+			toReplace += "<h3>";
+			toReplace += match[1];
+			toReplace += "</h3>";
+			search += "### ";
+			search += match[1];
+			cout << "Replace " << actualString << " by " << toReplace << endl;
+			str_replace(actualString, search, toReplace);
+		}
+		if (regex_search(actualString, match, h2_regex)) {
+			toReplace += "<h2>";
+			toReplace += match[1];
+			toReplace += "</h2>";
+			search += "## ";
+			search += match[1];
+			cout << "Replace " << actualString << " by " << toReplace << endl;
+			str_replace(actualString, search, toReplace);
+		}
+		if (regex_search(actualString, match, h1_regex)) {
+			toReplace += "<h1>";
+			toReplace += match[1];
+			toReplace += "</h1>";
+			search += "# ";
+			search += match[1];
+			cout << "Replace " << actualString << " by " << toReplace << endl;
+			str_replace(actualString, search, toReplace);
+		}
+	}
 }
 
 string convertToHTML::parseline(string& line) {
