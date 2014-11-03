@@ -18,9 +18,9 @@ using namespace std;
  * Regex
  */
 //*some tex*
-regex italic_regex(".*\\*(.*)\\*.*");
+regex italic_regex(".*\\*([a-zA-Z0-9ÉÈÊËÀÔÖÇéèêëàôöç ]+)\\*{1}");
 //**some text**
-regex bold_regex(".*\\*\\*(.*)\\*\\*.*");
+regex bold_regex("\\*\\*([a-zA-Z0-9ÉÈÊËÀÔÖÇéèêëàôöç* ]+)\\*\\*.*");
 //*		Some text
 regex list_regex("\\*\t(.*)");
 //1.	Some text
