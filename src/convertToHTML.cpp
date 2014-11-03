@@ -19,8 +19,6 @@ using namespace std;
  */
 //*some tex*
 regex italic_regex("[<>a-zA-Z0-9 ]*\\*([a-zA-Z0-9 ]*)\\*[<>a-zA-Z0-9 ]*");
-//**some text**
-regex bold_regex("\\*\\*(.*)\\*\\*");
 //*		Some text
 regex list_regex("\\*\t(.*)");
 //[some text](URL)
@@ -56,7 +54,33 @@ void convertToHTML::str_replace( string &s, string &search, string &replace ) {
 
 bool convertToHTML::search_headers_style(string& stringToReturn, smatch& match);
 
-void verify_bold() {
+void convertToHTML::verification_bold(string& actualString, const string& PreviousString) {
+
+	//**some text**
+	regex bold_regex("\\*\\*(.*)\\*\\*");
+
+	smatch match;
+
+	string toReplace, search;
+
+	if (regex_search(actualString, match, bold_regex)) {
+		if (current_list) {
+			current_list = false;
+			actualString += "</ul>";
+		}
+		if (need_paragraph) {
+			toReplace += "<p>";
+			need_paragraph = false;
+			current_paragraph = true;
+		}
+		toReplace += "<b>";
+		toReplace += match[1];
+		toReplace += "</b>";
+		search += "**";
+		search += match[1];
+		search += "**";
+		str_replace(actualString, search, toReplace);
+	}
 
 }
 
