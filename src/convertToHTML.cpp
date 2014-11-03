@@ -31,7 +31,7 @@ regex url_regex("[^!]*\\[(.*)\\]\\((.*)\\)");
 regex img_regex("!\\[(.*)\\]\\((.*)\\)");
 
 /*
- * H1, H2 and H3 style headers regexs
+ * H1, H2, H3, H4, H5 and H6 style headers regex
  */
 //# some text
 regex h1_regex("# (.*)");
