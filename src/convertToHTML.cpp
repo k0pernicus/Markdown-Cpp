@@ -226,6 +226,33 @@ bool convertToHTML::verification_headers(string& actualString) {
 			current_list = false;
 			actualString += "</ul>";
 		}
+		if (regex_search(actualString, match, h6_regex)) {
+			toReplace += "<h6>";
+			toReplace += match[1];
+			toReplace += "</h6>";
+			search += "###### ";
+			search += match[1];
+			cout << "Replace " << actualString << " by " << toReplace << endl;
+			str_replace(actualString, search, toReplace);
+		}
+		if (regex_search(actualString, match, h5_regex)) {
+			toReplace += "<h5>";
+			toReplace += match[1];
+			toReplace += "</h5>";
+			search += "##### ";
+			search += match[1];
+			cout << "Replace " << actualString << " by " << toReplace << endl;
+			str_replace(actualString, search, toReplace);
+		}
+		if (regex_search(actualString, match, h4_regex)) {
+			toReplace += "<h4>";
+			toReplace += match[1];
+			toReplace += "</h4>";
+			search += "#### ";
+			search += match[1];
+			cout << "Replace " << actualString << " by " << toReplace << endl;
+			str_replace(actualString, search, toReplace);
+		}
 		if (regex_search(actualString, match, h3_regex)) {
 			toReplace += "<h3>";
 			toReplace += match[1];
