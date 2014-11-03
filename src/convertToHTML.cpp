@@ -94,10 +94,53 @@ void convertToHTML::verification_bold(string& actualString) {
 		search += "**";
 		str_replace(actualString, search, toReplace);
 	}
-	else {
-		if (debug) {
-			cout << actualString << ": No replacement (bold)" << endl;
+}
+
+void convertToHTML::verification_italic(string& actualString) {
+
+	smatch match;
+
+	string toReplace, search;
+
+	if (regex_search(actualString, match, italic_regex)) {
+		if (current_list) {
+			current_list = false;
+			toReplace += "</ul>";
 		}
+		if (need_paragraph) {
+			toReplace += "<p>";
+			need_paragraph = false;
+			current_paragraph = true;
+		}
+		toReplace += "<i>";
+		toReplace += match[1];
+		toReplace += "</i>";
+		search += "*";
+		search += match[1];
+		search += "*";
+		cout << "Replace " << actualString << " by " << toReplace << endl;
+		str_replace(actualString, search, toReplace);
+	}
+}
+
+void convertToHTML::verification_non_ordonate_list(string& actualString){
+
+	smatch match;
+
+	string toReplace, search;
+
+	if (regex_search(actualString, match, list_regex)) {
+		if (!current_list) {
+			current_list = true;
+			toReplace += "<ul>";
+		}
+		toReplace += "<li>";
+		toReplace += match[1];
+		toReplace += "</li>";
+		search += "*	";
+		search += match[1];
+		cout << "Replace " << actualString << " by " << toReplace << endl;
+		str_replace(actualString, search, toReplace);
 	}
 
 }
