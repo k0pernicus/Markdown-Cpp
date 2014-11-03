@@ -54,7 +54,7 @@ int main() {
 	cout << endl;
 
 	while (getline(md_file->getFile(), line)) {
-		outfile << parseline(line) << endl;
+		outfile << convert_to_html.parseline(line) << endl;
 	}
 
 	md_file->closeFile();
