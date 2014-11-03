@@ -92,6 +92,7 @@ void convertToHTML::verification_bold(string& actualString) {
 		search += "**";
 		search += match[1];
 		search += "**";
+		cout << "Replace " << actualString << " by " << toReplace << endl;
 		str_replace(actualString, search, toReplace);
 	}
 }
