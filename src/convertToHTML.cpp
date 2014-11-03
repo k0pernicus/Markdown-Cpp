@@ -57,7 +57,6 @@ regex dash_title("[^a-zA-Z0-9]\\-+[^a-zA-Z0-9]");
 extern bool need_paragraph;
 extern bool current_paragraph;
 extern bool current_list;
-extern bool debug;
 
 void convertToHTML::str_replace( string &s, string &search, string &replace ) {
 	for( size_t pos = 0; ; pos += replace.length() )
@@ -152,136 +151,12 @@ string convertToHTML::parseline(string& line) {
 			|| regex_search(stringToReturn, match, url_regex) || search_headers_style(stringToReturn, match)
 			|| regex_search(stringToReturn, match, img_regex)
 			|| regex_search(stringToReturn, match, list_regex)) {
-		if (regex_search(stringToReturn, match, bold_regex)) {
-			if (current_list) {
-				current_list = false;
-				stringToReturn += "</ul>";
-			}
-			if (need_paragraph) {
-				toReplace += "<p>";
-				need_paragraph = false;
-				current_paragraph = true;
-			}
-			toReplace += "<b>";
-			toReplace += match[1];
-			toReplace += "</b>";
-			search += "**";
-			search += match[1];
-			search += "**";
-			str_replace(stringToReturn, search, toReplace);
-		}
-		toReplace = "";
-		search = "";
-		if (regex_search(stringToReturn, match, italic_regex)) {
-			if (current_list) {
-				current_list = false;
-				toReplace += "</ul>";
-			}
-			if (need_paragraph) {
-				toReplace += "<p>";
-				need_paragraph = false;
-				current_paragraph = true;
-			}
-			toReplace += "<i>";
-			toReplace += match[1];
-			toReplace += "</i>";
-			search += "*";
-			search += match[1];
-			search += "*";
-			str_replace(stringToReturn, search, toReplace);
-		}
-		toReplace = "";
-		search = "";
-		if (regex_search(stringToReturn, match, list_regex)) {
-			if (!current_list) {
-				current_list = true;
-				toReplace += "<ul>";
-			}
-				toReplace += "<li>";
-				toReplace += match[1];
-				toReplace += "</li>";
-				search += "*	";
-				search += match[1];
-				str_replace(stringToReturn, search, toReplace);
-		}
-		toReplace = "";
-		search = "";
-		if (regex_search(stringToReturn, match, img_regex)) {
-			if (current_list) {
-				current_list = false;
-				stringToReturn += "</ul>";
-			}
-			toReplace +="<img src=\"";
-			toReplace += match[2];
-			toReplace += "\"";
-			toReplace += " alt=\"";
-			toReplace += match[1];
-			toReplace += "\">";
-			search += "![";
-			search += match[1];
-			search += "]";
-			search += "(";
-			search += match[2];
-			search += ")";
-			str_replace(stringToReturn, search, toReplace);
-		}
-		toReplace = "";
-		search = "";
-		if (regex_search(stringToReturn, match, url_regex)) {
-			if (current_list) {
-				current_list = false;
-				stringToReturn += "</ul>";
-			}
-			if (need_paragraph) {
-				toReplace += "<p>";
-				need_paragraph = false;
-				current_paragraph = true;
-			}
-			toReplace +="<a href=\"";
-			toReplace += match[2];
-			toReplace += "\">";
-			toReplace += match[1];
-			toReplace += "</a>";
-			search += "[";
-			search += match[1];
-			search += "]";
-			search += "(";
-			search += match[2];
-			search += ")";
-			str_replace(stringToReturn, search, toReplace);
-		}
-		toReplace = "";
-		search = "";
-		if (search_headers_style(stringToReturn, match)) {
-			if (current_list) {
-				current_list = false;
-				stringToReturn += "</ul>";
-			}
-			if (regex_search(stringToReturn, match, h3_regex)) {
-				toReplace += "<h3>";
-				toReplace += match[1];
-				toReplace += "</h3>";
-				search += "### ";
-				search += match[1];
-				str_replace(stringToReturn, search, toReplace);
-			}
-			if (regex_search(stringToReturn, match, h2_regex)) {
-				toReplace += "<h2>";
-				toReplace += match[1];
-				toReplace += "</h2>";
-				search += "## ";
-				search += match[1];
-				str_replace(stringToReturn, search, toReplace);
-			}
-			if (regex_search(stringToReturn, match, h1_regex)) {
-				toReplace += "<h1>";
-				toReplace += match[1];
-				toReplace += "</h1>";
-				search += "# ";
-				search += match[1];
-				str_replace(stringToReturn, search, toReplace);
-			}
-		}
+		verification_bold(stringToReturn);
+		verification_italic(stringToReturn);
+		verification_non_ordonate_list(stringToReturn);
+		verification_img(stringToReturn);
+		verification_url(stringToReturn);
+		verification_headers(stringToReturn);
 	}
 
 	return stringToReturn;
