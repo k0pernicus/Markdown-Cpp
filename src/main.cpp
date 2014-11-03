@@ -21,6 +21,8 @@ bool need_paragraph = true;
 bool current_paragraph = false;
 bool current_list = false;
 
+bool debug = true;
+
 string changeExtensionFile(string& file_name);
 
 int main() {
