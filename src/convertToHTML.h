@@ -15,9 +15,22 @@ using namespace std;
 
 class convertToHTML {
 
-	using namespace std;
+public:
+	void verification_bold(string& actualString);
 
-	void convertToHTML::verification_bold(string& actualString, const string& PreviousString);
+	void verification_italic(string& actualString);
+
+	void verification_url(string& actualString);
+
+	void verification_img(string& actualString);
+
+	void verification_non_ordonate_list(string& actualString);
+
+	void verification_ordonate_list(string& actualString);
+
+	void verification_headers(string& actualString);
+
+	void verification_title(string& actualString);
 
 	string parseline(string& line);
 
