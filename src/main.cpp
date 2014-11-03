@@ -2,7 +2,7 @@
  * main.cpp
  *
  *  Created on: 30 oct. 2014
- *      Author: cameron
+ *      Author: antonin
  */
 #include <string.h>
 #include <fstream>
