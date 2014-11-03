@@ -302,12 +302,18 @@ string convertToHTML::parseline(string& line) {
 			|| regex_search(stringToReturn, match, url_regex) || search_headers_style(stringToReturn, match)
 			|| regex_search(stringToReturn, match, img_regex)
 			|| regex_search(stringToReturn, match, list_regex)) {
-		verification_bold(stringToReturn);
-		verification_italic(stringToReturn);
-		verification_non_ordonate_list(stringToReturn);
-		verification_img(stringToReturn);
-		verification_url(stringToReturn);
-		verification_headers(stringToReturn);
+		if (verification_bold(stringToReturn))
+			continue;
+		if (verification_italic(stringToReturn))
+			continue;
+		if (verification_non_ordonate_list(stringToReturn))
+			continue;
+		if (verification_img(stringToReturn))
+			continue;
+		if (verification_url(stringToReturn))
+			continue;
+		if (verification_headers(stringToReturn))
+			continue;
 	}
 
 	return stringToReturn;
